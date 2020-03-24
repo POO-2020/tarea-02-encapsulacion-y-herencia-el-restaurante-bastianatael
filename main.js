@@ -1,98 +1,135 @@
-import Restaurante from './restaurante.js';
-import Producto from './producto.js';
-import Precio from './precio.js';
-import ElementoPedido from './elemento-pedido.js';
-import Pedido from './pedido.js';
-import Fecha from './fecha.js';
-import Tiempo from './tiempo.js';
-import Cliente from './cliente.js';
-import Direccion from './direccion.js';
+import Precio from "./precio.js"
+import Tiempo from "./tiempo.js"
+import Fecha from "./fecha.js"
+import Pedido from "./pedido.js"
+import Restaurante from "./restaurante.js"
+import Cliente from "./cliente.js"
+import Producto from "./producto.js"
+import ElementoPedido from "./elemento-pedido.js"
+import Direccion from "./direccion.js"
+import clienteFrecuente from "./clientefrecuente.js"
 
-class Main {
-  constructor() {
-    this.fecha = new Fecha(15, 6, 2005);
+class Main{
+    constructor(){
+        this.valores = new Precio(130.50)
+        this.valores2 = new Precio(40.50)
 
-    this.tiempo1 = new Tiempo({ hora: 10, minuto: 25, periodo: 'am' });
-    this.tiempo2 = new Tiempo({ hora: 10, minuto: 25, periodo: 'pm' });
+        this.tiempos = new Tiempo(6,30,"PM")
+        this.fechas = new Fecha( new Date( 2020, 2, 30) )
 
-    this.direccion = new Direccion(
-      'Av. Universidad',
-      333,
-      0,
-      'Las Víboras',
-      28040,
-      'Colima',
-      'Colima'
-    );
+        this.domicilios = new Direccion("Girasol", 362, 0, "Lomnas de las Flores", 28984, "Colima", "Villa de Alvarez")
+        this.clientes = new Cliente("Juan Pérez Gutiérrez", this.domicilios, 3123194899)
 
-    this.precio = new Precio(2500.5);
+        this.productos = new Producto("Pizza Americana", this.valores)
+        this.productos2 = new Producto("Torta Hawaiana", this.valores2)
 
-    this.producto = new Producto('Pizza Hawaiana', this.precio);
-    this.elemento = new ElementoPedido(2, this.producto);
-    this.elemento2 = new ElementoPedido(1, this.producto);
-    this.elemento3 = new ElementoPedido(3, this.producto);
+        this.elementosPedidos = new ElementoPedido(this.productos, 3)
+        this.elementosPedidos2 = new ElementoPedido(this.productos2, 2)
 
-    this.cliente = new Cliente('Juan Pérez Díaz', this.direccion, 3124563256);
 
-    this.pedido = new Pedido(this.fecha, this.tiempo1, this.cliente);
-    this.pedido.agregarElemento(this.elemento);
-    this.pedido.agregarElemento(this.elemento2);
-    this.pedido.agregarElemento(this.elemento3);
-  }
+        let datoRestaurante = {
+            nombre: "Pizzas Don Bastian",
+            telefono: 3123194858,
+            direccion: this.domicilios
+        }
 
-  probarFecha() {
-    console.log(this.fecha.getAños());
-    console.log(this.fecha.getMeses());
-    console.log(this.fecha.getSemanas());
-    console.log(this.fecha.getDias());
-    console.log(this.fecha.getFecha());
-    console.log(this.fecha.getDiaFecha());
-  }
 
-  probarTiempo() {
-    console.log(this.tiempo1.getFormato12());
-    console.log(this.tiempo2.getFormato12());
-    console.log(this.tiempo1.getFormato24());
-    console.log(this.tiempo2.getFormato24());
-  }
+        let datosPedido = {
+            fecha: new Fecha(new Date(2019,3,30)),
+            hora: new Tiempo(10 , 50, "AM"),
+            cliente: this.cliente,
+            npedido: 10
+        }
 
-  probarDireccion() {
-    console.log(this.direccion.getFormatoCorto());
-    console.log(this.direccion.getFormatoExtendido());
-  }
+        let datosPedido2 = {
+            fecha: new Fecha(new Date(2017,2,13)),
+            hora: new Tiempo(6, 50, "PM"),
+            cliente: this.cliente2,
+            npedido: 15
+        }
 
-  probarPrecio() {
-    console.log(this.precio.getPrecio());
-  }
+        let datosClienteFrecuente = {
+            nombre: "Bastian Natael Hernández Corona",
+            direccion: new Direccion("Orquidea", 120, 7, "VillaSenior", 244876, "Colima", "Colima"),
+            telefono: 3123212321,
+            ncliente: 123212,
+            fechRegis: new Fecha(new Date(2017,8,24))
+        }
 
-  probarProducto() {
-    console.log(this.producto.getDescripcion());
-  }
 
-  probarCliente() {
-    console.log(this.cliente.getPerfil());
-  }
+        this.pedidos = new Pedido(datosPedido)
+        this.pedidos2 = new Pedido(datosPedido2)
 
-  probarElementoPedido() {
-    console.log(this.elemento.getDescripcion());
-  }
+        this.clienteFrecuente = new clienteFrecuente(datosClienteFrecuente)
 
-  probarPedido() {
-    console.log(this.pedido.getResumen());
-    console.log(this.pedido.getNumeroElementos());
-    console.log(this.pedido.getNumeroProductos());
-    console.log(this.pedido.getCostoTotal());
-    this.pedido.listarElementos();
-  }
+        this.restaurantes = new Restaurante(datoRestaurante)
+        
+        this.pedidos.agregarElemento(this.elementosPedidos)
+        this.pedidos.agregarElemento(this.elementosPedidos2)
+        this.pedidos.agregarElemento(this.elementosPedidos2)
+
+    }
+    getPrecio(){
+        console.log(`${this.valores.getPrecio()}`)
+    }
+    getTiempo(){
+        console.log(`${this.tiempos.getFormato12()}`)
+        console.log(`${this.tiempos.getFormato24()}`)
+    }
+    getFecha(){
+        console.log(`Año ${this.fechas.getAños()}`)
+        console.log(`Meses ${this.fechas.getMeses()}`)
+        console.log(`Semanas ${this.fechas.getSemanas()}`)
+        console.log(`Días ${this.fechas.getDias()}`)
+        console.log(`Fecha ${this.fechas.getFecha()}`)
+        console.log(`Día ${this.fechas.getDiaFecha()}`)
+    }
+    getDomicilio(){
+        console.log(`${this.domicilios.getFormatoCorto()}`)
+        console.log(`${this.domicilios.getFormatoExtendido()}`)
+    }
+    getCliente(){
+        console.log(`${this.clientes.getPerfil()}`)
+    }
+    getProducto(){
+        console.log(`${this.productos.getDescripcion()}`)
+    }
+    getElementoPedido(){
+        console.log(`${this.elementosPedidos.getDescripccion()}`)
+    }
+    getPedido(){
+
+        console.log(this.pedidos.getResumen())
+        console.log(this.pedidos.getNumeroElementos())
+        console.log(this.pedidos.getNumeroProductos())
+        console.log(this.pedidos.getCostoTotal())
+        this.pedidos.listarElemeto()
+ 
+    }
+    getRestaurante()
+    {
+
+        this.restaurantes.registrarProducto(this.productos)
+        this.restaurantes.registrarProducto(this.productos2)
+        this.restaurantes.registrarPedido(this.pedidos)
+
+        console.log(this.restaurantes.registrarPedido(this.pedidos))
+        console.log(this.restaurantes.registrarPedido(this.pedidos))
+
+ 
+        console.log(this.restaurantes.eliminarPedido(this.pedidos))
+
+
+        console.log(this.restaurantes.eliminarPedido(this.pedidos))
+
+  
+        console.log(this.restaurantes.registrarPedido(this.pedidos))
+
+        console.log(this.restaurantes.modificarPedido(this.pedidos, this.pedidos2))
+
+        this.restaurantes.listarProductos()
+        this.restaurantes.listarPedidos()
+    }
 }
-
-let app = new Main();
-
-app.probarFecha();
-app.probarTiempo();
-app.probarDireccion();
-app.probarPrecio();
-app.probarProducto();
-app.probarElementoPedido();
-app.probarCliente();
-app.probarPedido();
+let app = new Main()
+app.getRestaurante()
